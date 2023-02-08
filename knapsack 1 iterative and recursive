@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define      ull        unsigned long long
+#define      ll         long long
+#define      ff         first
+#define      ss         second
+#define      w(t)       ll t; cin >> t; while(t--)
+#define      pb         push_back
+#define      fastio()   ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+/*-----------------------------------------------------------------------------------
+*/
+const int MOD = 1e9 + 7;
+const int N = 1e5 + 5;
+long long INF = 1e18;
+ll n, W;
+vector <ll> wt(N);
+vector <ll> val(N);
+
+// ll dp[105][N];
+
+// //func(i, w) -> having w wt in the bag whats the max value
+// //we can create at and before i
+// //recurrence func(i, w) = max (func(i - 1, w - wt[i]) + val[i], func(i - 1,w))
+
+// ll func(ll i, ll w){
+// 	if(w < 0)return INT_MIN;
+// 	if(w == 0)return 0;
+// 	if(i <= 0)return 0;
+// 	if(dp[i][w] != -1)return dp[i][w];
+// 	return dp[i][w] = max(func(i - 1, w - wt[i]) + val[i], func(i - 1, w));
+// }
+
+void solve() { 
+	// memset(dp, -1, sizeof(dp));
+	cin >> n >> W;
+	for (int i = 1; i <= n; i++){
+		cin >> wt[i] >> val[i];
+	}
+
+	// cout << func(n, W) << endl;
+	//lets turn it into iterative dp
+	vector <vector <ll>> dp(105, vector <ll> (N));
+	for (ll i = 1; i <= n; i++){
+		for (ll j = 1; j <= W; j++){
+			// dp[i][j] = max(dp[i - 1][j - wt[i]] + val[i], dp[i - 1][j]);
+			if(j - wt[i] >= 0){
+				dp[i][j] = max(dp[i - 1][j - wt[i]] + val[i], dp[i - 1][j]);
+			}else{
+				dp[i][j] = dp[i - 1][j];
+			}
+		}
+	}
+	cout << dp[n][W] << endl;
+}
+
+int main(){
+	fastio();
+	// w(t){
+	// 	solve();
+	// }
+	solve();
+}
