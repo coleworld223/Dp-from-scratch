@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define      ull        unsigned long long
+#define      ll         long long
+#define      ff         first
+#define      ss         second
+#define      w(t)       ll t; cin >> t; while(t--)
+#define      pb         push_back
+#define      fastio()   ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+/*-----------------------------------------------------------------------------------
+*/
+const int MOD = 1e9 + 7;
+const int N = 1e5 + 5;
+vector <ll> h(N);
+vector <ll> dp(N, -1);
+
+ll func(ll i){
+	if(i == 1)return 0;
+	if(i == 2)return abs(h[1] - h[2]);
+	if(dp[i] != -1)return dp[i];
+	return dp[i] = min(func(i - 1) + abs(h[i] - h[i - 1]),
+		                 func(i - 2) + abs(h[i] - h[i - 2]));
+}
+void solve(){	
+	ll n;
+	cin >> n;
+
+	//frog jump question
+	for (ll i = 1; i <= n; i++){
+		cin >> h[i];
+	}
+
+	cout << func(n) << endl;
+}
+int main(){
+	fastio();
+	// w(t){
+	// 	solve();
+	// }
+	solve();
+}
